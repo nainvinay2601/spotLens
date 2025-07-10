@@ -18,7 +18,7 @@ interface IPin {
     | "food"
     | "transportation";
   imageUrl?: string;
-  status: "active" | "archieved";
+  status: "active" | "archived";
 }
 
 // Define PinSchema now
@@ -30,8 +30,17 @@ const PinSchema = new Schema<IPin>(
     },
     description: String,
     location: {
-      type: { type: String, default: "Point" },
-      coordinates: [Number], // [lng, lat]
+      type: { type: String, default: "Point", required: true },
+      coordinates: {
+        type: [Number],
+        required: true,
+        validate: {
+          validator: function (v: number[]) {
+            return v.length === 2;
+          },
+          message:"location must contain exactly 2 numbers"
+        },
+      }, // [lng, lat]
     },
     userId: { type: String, required: true },
     category: {
