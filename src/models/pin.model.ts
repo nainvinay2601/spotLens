@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 //Define the types
 
-interface IPin {
+export interface IPin {
   title: string;
   description?: string;
   location: {
@@ -38,7 +38,7 @@ const PinSchema = new Schema<IPin>(
           validator: function (v: number[]) {
             return v.length === 2;
           },
-          message:"location must contain exactly 2 numbers"
+          message: "location must contain exactly 2 numbers",
         },
       }, // [lng, lat]
     },
